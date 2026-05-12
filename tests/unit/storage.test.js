@@ -2,6 +2,8 @@ const {
   STORAGE_KEYS,
   formatLayoutPayload,
   formatCustomPositionsPayload,
+  getAccountScopeFromPath,
+  getScopedStorageKey,
   isCustomPositionsShape
 } = require("./storage-utils");
 
@@ -36,5 +38,12 @@ describe("storage payload helpers", () => {
       "panel-inbox": { x: 1, y: 2, width: "3", height: 4 }
     })).toBe(false);
     expect(isCustomPositionsShape(null)).toBe(false);
+  });
+
+  test("formats Gmail account-scoped storage keys", () => {
+    expect(getAccountScopeFromPath("/mail/u/0/")).toBe("u-0");
+    expect(getAccountScopeFromPath("/mail/u/1/#inbox")).toBe("u-1");
+    expect(getAccountScopeFromPath("/")).toBe("default");
+    expect(getScopedStorageKey(STORAGE_KEYS.activeLayout, "/mail/u/1/")).toBe("fluid_active_layout:u-1");
   });
 });

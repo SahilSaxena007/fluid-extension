@@ -4,10 +4,26 @@
     customPositions: "fluid_custom_positions"
   });
 
+  /** Returns the current Gmail account scope from the URL. */
+  function getAccountScope() {
+    const match = window.location.pathname.match(/\/mail\/u\/([^/]+)/);
+    return match ? `u-${match[1]}` : "default";
+  }
+
+  /** Returns an account-scoped storage key. */
+  function getScopedStorageKey(key) {
+    return `${key}:${getAccountScope()}`;
+  }
+
   /** Reads a key from chrome.storage.local with graceful error handling. */
   async function readStorageKey(key, fallbackValue) {
     try {
-      const result = await chrome.storage.local.get(key);
+      const scopedKey = getScopedStorageKey(key);
+      const result = await chrome.storage.local.get([scopedKey, key]);
+      if (Object.prototype.hasOwnProperty.call(result, scopedKey)) {
+        return result[scopedKey];
+      }
+
       return Object.prototype.hasOwnProperty.call(result, key) ? result[key] : fallbackValue;
     } catch (error) {
       console.warn("[Fluid] Storage read failed", error);
@@ -18,7 +34,11 @@
   /** Writes values to chrome.storage.local with graceful error handling. */
   async function writeStorageValues(values) {
     try {
-      await chrome.storage.local.set(values);
+      const scopedValues = Object.entries(values).reduce((nextValues, [key, value]) => {
+        nextValues[getScopedStorageKey(key)] = value;
+        return nextValues;
+      }, {});
+      await chrome.storage.local.set(scopedValues);
       return true;
     } catch (error) {
       console.warn("[Fluid] Storage write failed", error);
@@ -144,6 +164,8 @@
 
   window.fluidStorage = {
     STORAGE_KEYS,
+    getAccountScope,
+    getScopedStorageKey,
     saveLayout,
     loadLayout,
     saveCustomPositions,

@@ -8,6 +8,17 @@ function formatLayoutPayload(layoutId) {
   return { [STORAGE_KEYS.activeLayout]: layoutId || null };
 }
 
+/** Returns the Gmail account scope for a URL path. */
+function getAccountScopeFromPath(pathname) {
+  const match = pathname.match(/\/mail\/u\/([^/]+)/);
+  return match ? `u-${match[1]}` : "default";
+}
+
+/** Returns an account-scoped chrome.storage.local key. */
+function getScopedStorageKey(key, pathname) {
+  return `${key}:${getAccountScopeFromPath(pathname)}`;
+}
+
 /** Returns the chrome.storage.local payload for custom panel positions. */
 function formatCustomPositionsPayload(positions) {
   return { [STORAGE_KEYS.customPositions]: positions || null };
@@ -30,5 +41,7 @@ module.exports = {
   STORAGE_KEYS,
   formatLayoutPayload,
   formatCustomPositionsPayload,
+  getAccountScopeFromPath,
+  getScopedStorageKey,
   isCustomPositionsShape
 };
