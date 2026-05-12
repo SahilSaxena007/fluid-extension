@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 62" role="img" aria-label="Task First layout thumbnail">
+  <rect width="120" height="62" rx="6" fill="#f9fafb"/>
+  <rect x="6" y="6" width="28" height="50" rx="3" fill="#bfdbfe"/>
+  <rect x="40" y="6" width="48" height="23" rx="3" fill="#dbeafe"/>
+  <rect x="40" y="34" width="48" height="22" rx="3" fill="#e0e7ff"/>
+  <rect x="94" y="6" width="20" height="50" rx="3" fill="#c7d2fe"/>
+</svg>
