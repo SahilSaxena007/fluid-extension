@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Fluid - Reshape Gmail",
+  "version": "1.0.0",
+  "description": "Customise Gmail's layout to match how you actually work.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://mail.google.com/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": [
+        "lib/interact.min.js",
+        "content/layout-engine.js",
+        "content/drag-editor.js",
+        "content/content.js"
+      ],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

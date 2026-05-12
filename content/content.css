@@ -1,0 +1,8 @@
+:root {
+  --fluid-edit-accent: #2563eb;
+  --fluid-edit-surface: rgba(15, 23, 42, 0.3);
+}
+
+.fluid-edit-mode .fluid-drag-handle {
+  cursor: grab;
+}

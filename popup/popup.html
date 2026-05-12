@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fluid</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="fluid-popup">
+      <header class="fluid-header">
+        <div>
+          <h1>Fluid</h1>
+          <p>Your Gmail, your way</p>
+        </div>
+        <span class="fluid-current-layout">Default</span>
+      </header>
+
+      <section class="fluid-preset-grid" aria-label="Preset layouts">
+        <button class="fluid-preset-card" type="button" data-layout="task-first">
+          <span class="fluid-thumbnail fluid-thumbnail-task-first"></span>
+          <span>Task First</span>
+        </button>
+        <button class="fluid-preset-card" type="button" data-layout="executive">
+          <span class="fluid-thumbnail fluid-thumbnail-executive"></span>
+          <span>Executive</span>
+        </button>
+        <button class="fluid-preset-card" type="button" data-layout="focus">
+          <span class="fluid-thumbnail fluid-thumbnail-focus"></span>
+          <span>Focus Mode</span>
+        </button>
+        <button class="fluid-preset-card" type="button" data-layout="checklist">
+          <span class="fluid-thumbnail fluid-thumbnail-checklist"></span>
+          <span>Checklist</span>
+        </button>
+      </section>
+
+      <button class="fluid-customise-btn" type="button">Customise</button>
+      <button class="fluid-reset-btn" type="button">Reset to Default</button>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
