@@ -65,3 +65,28 @@
   background: #f3f4f6;
   color: #111827;
 }
+
+.fluid-summary-bar {
+  position: fixed;
+  top: 64px;
+  left: 220px;
+  right: 56px;
+  z-index: 65;
+  height: 36px;
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+  background: #eff6ff;
+  color: #1e3a8a;
+  font: 700 13px/1.2 system-ui, sans-serif;
+}
+
+.fluid-checklist-row {
+  position: relative;
+}
+
+.fluid-checklist-checkbox {
+  position: relative;
+  z-index: 5;
+  margin: 0 8px 0 4px;
+  accent-color: #2563eb;
+}

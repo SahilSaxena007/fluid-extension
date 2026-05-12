@@ -110,6 +110,64 @@
   let activeLayoutId = null;
   let activeCustomPositions = null;
 
+  /** Removes Fluid preset decoration nodes and classes. */
+  function clearDecorations() {
+    if (!root.document) {
+      return;
+    }
+
+    root.document.querySelector(".fluid-summary-bar")?.remove();
+    root.document.querySelectorAll(".fluid-checklist-checkbox").forEach((checkbox) => checkbox.remove());
+    root.document.querySelectorAll(".fluid-checklist-row").forEach((row) => row.classList.remove("fluid-checklist-row"));
+  }
+
+  /** Adds a summary bar for the Executive preset. */
+  function injectSummaryBar() {
+    if (!root.document || root.document.querySelector(".fluid-summary-bar")) {
+      return;
+    }
+
+    const unreadRows = root.document.querySelectorAll("tr.zA.zE, [role='row'].zE").length;
+    const totalRows = root.document.querySelectorAll("tr.zA, [role='row']").length;
+    const summary = root.document.createElement("div");
+    summary.className = "fluid-summary-bar";
+    summary.textContent = `${unreadRows} unread / ${totalRows} visible`;
+    root.document.body.prepend(summary);
+  }
+
+  /** Adds checklist controls to visible inbox rows. */
+  function injectChecklistRows() {
+    if (!root.document) {
+      return;
+    }
+
+    root.document.querySelectorAll("tr.zA, [role='row']").forEach((row) => {
+      if (row.querySelector(".fluid-checklist-checkbox")) {
+        return;
+      }
+
+      row.classList.add("fluid-checklist-row");
+      const checkbox = root.document.createElement("input");
+      checkbox.className = "fluid-checklist-checkbox";
+      checkbox.type = "checkbox";
+      checkbox.setAttribute("aria-label", "Mark email as done");
+      row.prepend(checkbox);
+    });
+  }
+
+  /** Applies any DOM decoration needed for a preset. */
+  function decoratePreset(layoutId) {
+    clearDecorations();
+
+    if (layoutId === "executive") {
+      injectSummaryBar();
+    }
+
+    if (layoutId === "checklist") {
+      injectChecklistRows();
+    }
+  }
+
   /** Returns the selector chain for a panel id. */
   function getPanelSelectorChain(panelId) {
     return PANEL_SELECTORS[panelId] ? [...PANEL_SELECTORS[panelId]] : [];
@@ -239,6 +297,7 @@
 
     markPanels(panels);
     injectLayoutStyles(css);
+    decoratePreset(layoutId);
     activeLayoutId = layoutId;
     activeCustomPositions = null;
 
@@ -292,6 +351,7 @@
   /** Clears Fluid layout overrides. */
   function reset() {
     injectLayoutStyles("");
+    clearDecorations();
     activeLayoutId = null;
     activeCustomPositions = null;
 
