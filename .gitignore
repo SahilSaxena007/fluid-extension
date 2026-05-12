@@ -1,6 +1,7 @@
 .env
 node_modules/
 .playwright-mcp-profile/
+.playwright-mcp-profile-chromium/
 playwright-mcp.*.log
 tests/screenshots/*
 !tests/screenshots/.gitkeep
